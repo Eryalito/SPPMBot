@@ -1,3 +1,37 @@
 {
-    
+    "commands": {
+        "settings": {
+            "key": "settings",
+            "message": "This is the settings menu.\n\nPlease select an option below.",
+            "inline": {
+                "text": {
+                    "langs": "🌐 Idiomas",
+                    "close": "❌ Close"
+                },
+                "callback": {
+                    "langs": "/change-language-menu",
+                    "close": "/nothing"
+                }
+            }
+        },
+        "change-language-menu": {
+            "key": "change-language-menu",
+            "message": "Here you can change the language. The current language is <b>{{lang}}</b>.\n\nPlease select an option below.",
+            "inline": {
+                "text": {
+                    "back": "🔙 Back"
+                },
+                "callback": {
+                    "back": "/settings"
+                }
+            }
+        },
+        "change-language": {
+            "key": "change-language"
+        }
+    },
+    "langs": {
+        "en": "English",
+        "es": "Spanish"
+    }
 }

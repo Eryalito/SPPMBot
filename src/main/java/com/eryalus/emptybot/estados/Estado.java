@@ -6,6 +6,7 @@
 package com.eryalus.emptybot.estados;
 
 import com.eryalus.emptybot.data.Send;
+import com.eryalus.emptybot.i18n.StringManager;
 import com.eryalus.emptybot.persistence.entities.Person;
 import com.eryalus.emptybot.principal.BotTelegram;
 import java.util.ArrayList;
@@ -17,12 +18,14 @@ import java.util.ArrayList;
 public abstract class Estado {
 
     protected final BotTelegram PARENT;
-    protected final Person person;
+    protected Person person;
     public static final int ESTADO_GENERAL = 0, ESTADO_GENERAL_ADMIN = 0;
+    protected StringManager stringManager;
 
     public Estado(BotTelegram bot, Person person) {
         PARENT = bot;
         this.person = person;
+        this.stringManager = StringManager.getInstance(person.getLang());
     }
 
     public abstract ArrayList<Send> response(ArrayList<Send> ms);

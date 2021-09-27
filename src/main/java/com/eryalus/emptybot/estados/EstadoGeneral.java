@@ -7,6 +7,7 @@ package com.eryalus.emptybot.estados;
 
 import com.eryalus.emptybot.comandos.usuario.*;
 import com.eryalus.emptybot.data.Send;
+import com.eryalus.emptybot.i18n.StringManager;
 import com.eryalus.emptybot.persistence.entities.Person;
 import com.eryalus.emptybot.principal.BotTelegram;
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class EstadoGeneral extends Estado {
             ms = new Start(CHAT, PARENT, person).addMessages(ms);
         } else if (txt.equals("/help") || txt.equals("help")) {
             ms = new Help(person).addMessages(ms);
+        } else if(txt.equals("/"+stringManager.translate("commands.settings.key"))){ // /settings
+            ms = new Settings(person).addMessages(ms);
         }
         return ms;
     }

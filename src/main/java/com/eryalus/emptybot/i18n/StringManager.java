@@ -25,7 +25,7 @@ public class StringManager {
     /**
      * Default lang. It'll be used when an instance is asked without lang.
      */
-    private static final String DEFAULT_LANGUAGE = "en";
+    public static final String DEFAULT_LANGUAGE = "en";
 
     /**
      * Map of translation instances with the language as key.
