@@ -57,7 +57,7 @@ Set the appropriate variables on dataBase.Basics and parameters.json to connect 
 
 ### Must have:
 
-1. A 'person' table with id, name, surname, username and satate. *CREATE TABLE IF NOT EXISTS `person`(`id` BIGINT NOT NULL AUTO_INCREMENT, `telegramId` BIGINT NOT NULL,`name` VARCHAR(45) NULL,`surname` VARCHAR(45) NULL,`username` VARCHAR(45) NULL,`state` INT NULL DEFAULT 0,`admin` TINYINT(1) NOT NULL DEFAULT 0,`send_log` TINYINT(1) NOT NULL DEFAULT 0, PRIMARY KEY (`id`))*
+1. A 'person' table with id, name, surname, username, lang, satate and admin and log flags. *CREATE TABLE IF NOT EXISTS `person`(`id` BIGINT NOT NULL AUTO_INCREMENT, `telegramId` BIGINT NOT NULL,`name` VARCHAR(45) NULL,`surname` VARCHAR(45) NULL,`username` VARCHAR(45) NULL,`lang` VARCHAR(5) NULL,`state` INT NULL DEFAULT 0,`admin` TINYINT(1) NOT NULL DEFAULT 0,`send_log` TINYINT(1) NOT NULL DEFAULT 0, PRIMARY KEY (`id`))*
 
 ---
 

@@ -8,15 +8,7 @@ package com.eryalus.emptybot.acciones;
 import com.eryalus.emptybot.data.Send;
 import com.eryalus.emptybot.estados.Estado;
 import com.eryalus.emptybot.persistence.entities.Person;
-import com.eryalus.emptybot.persistence.repositories.RepositoryManager;
 import com.eryalus.emptybot.principal.BotTelegram;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.telegram.telegrambots.meta.api.objects.Chat;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
 
 /**
  *
@@ -33,10 +26,12 @@ public class AccionAdmin implements Action {
 
     private final Update UPDATE;
     private final BotTelegram PARENT;
+    private final Person PERSON;
 
-    public AccionAdmin(Update UPDATE, BotTelegram PARENT) {
+    public AccionAdmin(Update UPDATE, BotTelegram PARENT, Person PERSON) {
         this.UPDATE = UPDATE;
         this.PARENT = PARENT;
+        this.PERSON = PERSON;
     }
 
     @Override
@@ -44,12 +39,11 @@ public class AccionAdmin implements Action {
         if (UPDATE.getMessage().getChat().isUserChat()) {
             Message mensaje = UPDATE.getMessage();
             Chat chat = mensaje.getChat();
-            Person person = RepositoryManager.getPersonRepository().addIfNotExists(new Person(chat));
             ArrayList<Send> ms = new ArrayList<>();
             if (mensaje.hasText()) {
-                switch (person.getState()) {
+                switch (PERSON.getState()) {
                     case Estado.ESTADO_GENERAL_ADMIN:
-                        ms = new com.eryalus.emptybot.estados.EstadoGeneralAdmin(chat,  mensaje, PARENT).response(ms);
+                        ms = new com.eryalus.emptybot.estados.EstadoGeneralAdmin(chat,  mensaje, PARENT, PERSON).response(ms);
                         break;
                     default:
                         return false;

@@ -5,16 +5,24 @@
  */
 package com.eryalus.emptybot.comandos.usuario;
 
-import com.eryalus.emptybot.data.Send;
 import java.util.ArrayList;
+
 import com.eryalus.emptybot.comandos.Command;
+import com.eryalus.emptybot.data.Send;
+import com.eryalus.emptybot.persistence.entities.Person;
+
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+
 
 /**
  *
  * @author eryalus
  */
-public class Help implements Command {
+public class Help extends Command {
+
+    public Help(Person person) {
+        super(person);
+    }
 
     public static final String HELP_TXT = "<b>Comandos</b>\n"
             + "\n/start - Muestra el mensaje de bienvenida."
@@ -30,4 +38,5 @@ public class Help implements Command {
         ms.add(s);
         return ms;
     }
+
 }

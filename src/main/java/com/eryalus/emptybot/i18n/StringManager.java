@@ -54,7 +54,7 @@ public class StringManager {
      * @param fallback whether the fallback is enabled or not.
      */
     private StringManager(String lang, boolean fallback){
-        this.currentLang = lang;
+        this.currentLang = lang != null ? lang : DEFAULT_LANGUAGE;
         this.fallbackEnabled = fallback;
         InputStream in = StringManager.class.getResourceAsStream("../../../../i18n/"+lang+".json");
         if(in == null){

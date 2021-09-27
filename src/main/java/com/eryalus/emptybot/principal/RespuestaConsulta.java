@@ -47,13 +47,13 @@ public class RespuestaConsulta extends Thread {
             try {
                 Action accion;
                 boolean done = false;
-                Person person = RepositoryManager.getPersonRepository().findByTelegramId(UPDATE.getMessage().getChatId());
+                Person person = RepositoryManager.getPersonRepository().findByTelegramIdOrCreate(UPDATE.getMessage().getChat());
                 if (person != null && person.getAdmin()) {
-                    accion = new AccionAdmin(UPDATE, PARENT);
+                    accion = new AccionAdmin(UPDATE, PARENT, person);
                     done = accion.action();
                 }
-                if (!done) {
-                    accion = new AccionNoAdmin(UPDATE, PARENT);
+                if (person != null && !done) {
+                    accion = new AccionNoAdmin(UPDATE, PARENT, person);
                     accion.action();
                 }
             } catch (Exception ex) {
@@ -61,11 +61,14 @@ public class RespuestaConsulta extends Thread {
             }
         } else if (UPDATE.hasCallbackQuery()) {
             CallbackQuery callbackQuery = UPDATE.getCallbackQuery();
-            try {
-                Action accion = new AccionNoAdminCallBack(callbackQuery, PARENT);
-                accion.action();
-            } catch (Exception ex) {
+            Person person = RepositoryManager.getPersonRepository().findByTelegramIdOrCreate(callbackQuery.getMessage().getChat());
+            if(person != null){
+                try {
+                    Action accion = new AccionNoAdminCallBack(callbackQuery, PARENT, person);
+                    accion.action();
+                } catch (Exception ex) {
 
+                }
             }
         }
         PARENT.remove(this);
