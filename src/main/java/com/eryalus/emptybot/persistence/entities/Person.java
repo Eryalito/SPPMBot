@@ -39,6 +39,9 @@ public class Person implements DefaultEntity{
     @Column(name = "send_log")
     private Boolean sendLog = false;
 
+    @Column(name = "lang")
+    private String lang;
+
     public Person() {
     }
 
@@ -57,6 +60,14 @@ public class Person implements DefaultEntity{
         this.username = chat.getUserName();
     }
 
+    
+    public String getLang() {
+        return this.lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
 
     public Boolean isAdmin() {
         return this.admin;
