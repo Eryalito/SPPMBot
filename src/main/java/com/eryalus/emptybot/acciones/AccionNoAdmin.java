@@ -5,12 +5,10 @@
  */
 package com.eryalus.emptybot.acciones;
 
-import com.eryalus.emptybot.principal.BotTelegram;
 import com.eryalus.emptybot.data.Send;
 import com.eryalus.emptybot.estados.Estado;
 import com.eryalus.emptybot.persistence.entities.Person;
-import com.eryalus.emptybot.persistence.repositories.RepositoryManager;
-
+import com.eryalus.emptybot.principal.BotTelegram;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
 
 /**
  *
@@ -27,13 +26,15 @@ public class AccionNoAdmin implements Action {
 
     private final Update UPDATE;
     private final BotTelegram PARENT;
+    private final Person PERSON;
     private static final Long VIDEO_NOTE_PATH = 4L;
     private static final Long STICKERS_PATH = 2L;
     private static final Long VOICE_NOTE_PATH = 3L;
 
-    public AccionNoAdmin(Update UPDATE, BotTelegram PARENT) {
+    public AccionNoAdmin(Update UPDATE, BotTelegram PARENT, Person PERSON) {
         this.UPDATE = UPDATE;
         this.PARENT = PARENT;
+        this.PERSON = PERSON;
     }
 
     @Override
@@ -41,7 +42,6 @@ public class AccionNoAdmin implements Action {
         if (UPDATE.getMessage().getChat().isUserChat()) {
             Message mensaje = UPDATE.getMessage();
             Chat chat = mensaje.getChat();
-            Person person = RepositoryManager.getPersonRepository().addIfNotExists(new Person(chat));
             ArrayList<Send> ms = new ArrayList<>();
             if (mensaje.hasDocument()) {
             } else if (mensaje.hasPhoto()) {
@@ -51,9 +51,9 @@ public class AccionNoAdmin implements Action {
             } else if (mensaje.hasVideoNote()) {
             } else if (mensaje.hasSticker()) {
             } else if (mensaje.hasText()) {
-                switch (person.getState()) {
+                switch (PERSON.getState()) {
                     case Estado.ESTADO_GENERAL:
-                        ms = new com.eryalus.emptybot.estados.EstadoGeneral(chat, mensaje, PARENT).response(ms);
+                        ms = new com.eryalus.emptybot.estados.EstadoGeneral(chat, mensaje, PARENT, PERSON).response(ms);
                         break;
                     default:
                         break;                }

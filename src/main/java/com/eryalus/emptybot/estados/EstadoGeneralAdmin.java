@@ -5,8 +5,13 @@
  */
 package com.eryalus.emptybot.estados;
 
-import com.eryalus.emptybot.principal.BotTelegram;
 import com.eryalus.emptybot.data.Send;
+import com.eryalus.emptybot.persistence.entities.Person;
+import com.eryalus.emptybot.principal.BotTelegram;
+import java.util.ArrayList;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import java.util.ArrayList;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -20,8 +25,8 @@ public class EstadoGeneralAdmin extends Estado {
     private final Chat CHAT;
     private final Message MESSAGE;
 
-    public EstadoGeneralAdmin(Chat chat, Message m, BotTelegram bot) {
-        super(bot);
+    public EstadoGeneralAdmin(Chat chat, Message m, BotTelegram bot, Person person) {
+        super(bot, person);
         CHAT = chat;
         MESSAGE = m;
     }

@@ -4,6 +4,9 @@ import com.eryalus.emptybot.persistence.entities.Person;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+
+
 
 
 
@@ -41,6 +44,12 @@ public class PersonRepository extends Repository<Person>{
             System.err.println(ex.getMessage());
         }
         return null;
+    }
+
+    
+    public Person findByTelegramIdOrCreate(Chat chat){
+        Person p = new Person(chat);
+        return this.addIfNotExists(p);
     }
 
     public List<Person> findBySendLog(){

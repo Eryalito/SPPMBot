@@ -5,9 +5,14 @@
  */
 package com.eryalus.emptybot.estados;
 
-import com.eryalus.emptybot.principal.BotTelegram;
 import com.eryalus.emptybot.comandos.usuario.*;
 import com.eryalus.emptybot.data.Send;
+import com.eryalus.emptybot.persistence.entities.Person;
+import com.eryalus.emptybot.principal.BotTelegram;
+import java.util.ArrayList;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Message;
+
 import java.util.ArrayList;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -21,8 +26,8 @@ public class EstadoGeneral extends Estado {
     private final Chat CHAT;
     private final Message MESSAGE;
 
-    public EstadoGeneral(Chat chat, Message m, BotTelegram bot) {
-        super(bot);
+    public EstadoGeneral(Chat chat, Message m, BotTelegram bot, Person person) {
+        super(bot, person);
         CHAT = chat;
         MESSAGE = m;
     }
@@ -32,9 +37,9 @@ public class EstadoGeneral extends Estado {
         String texto = MESSAGE.getText();
         String txt = texto.toLowerCase().trim();
         if (txt.equals("/start") || txt.equals("start")) {
-            ms = new Start(CHAT, PARENT).addMessages(ms);
+            ms = new Start(CHAT, PARENT, person).addMessages(ms);
         } else if (txt.equals("/help") || txt.equals("help")) {
-            ms = new Help().addMessages(ms);
+            ms = new Help(person).addMessages(ms);
         }
         return ms;
     }
