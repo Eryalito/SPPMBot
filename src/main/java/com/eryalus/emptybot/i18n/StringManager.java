@@ -25,7 +25,7 @@ public class StringManager {
     /**
      * Default lang. It'll be used when an instance is asked without lang.
      */
-    private static final String DEFAULT_LANGUAGE = "en";
+    public static final String DEFAULT_LANGUAGE = "en";
 
     /**
      * Map of translation instances with the language as key.
@@ -54,7 +54,7 @@ public class StringManager {
      * @param fallback whether the fallback is enabled or not.
      */
     private StringManager(String lang, boolean fallback){
-        this.currentLang = lang != null ? lang : DEFAULT_LANGUAGE;
+        this.currentLang = lang;
         this.fallbackEnabled = fallback;
         InputStream in = StringManager.class.getResourceAsStream("../../../../i18n/"+lang+".json");
         if(in == null){
@@ -96,11 +96,26 @@ public class StringManager {
      * @return Translation instance.
      */
     public static StringManager getInstance(String lang, boolean enableFallback){
+        lang = lang != null && !lang.equals("") ? lang : DEFAULT_LANGUAGE;
         StringManager instance = instances.get(lang);
         if(instance == null){
             instance = new StringManager(lang, enableFallback);
         }
         return instance;
+    }
+
+    /**
+     * Get a translation based on the given key. 
+     * <p>
+     * Other langs will be tested if the translation fails if fallback is enabled.
+     * They'll follow the {@code StringManager.LANG_FALLBACK} order.
+     * </p>
+     * 
+     * @param key The translation key.
+     * @return The translation.
+     */
+    public String translate(String key){
+        return this.translate(key, null);
     }
 
     /**
